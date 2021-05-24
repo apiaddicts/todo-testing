@@ -4,7 +4,8 @@
   "description": "API Owner TODO API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "definition-swagger-test": "mocha --timeout 0 --exit test/todo.swagger.test.js"
   },
   "author": "Omar del Valle Rodriguez",
   "license": "ISC",
@@ -13,5 +14,12 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "driven-swagger-test": "^1.2.1",
+    "mocha": "^8.4.0",
+    "sinon": "^10.0.0",
+    "sinon-express-mock": "^2.2.1"
   }
 }

@@ -31,6 +31,14 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Task"
+        "400":
+          description: Bad request
+          schema:
+            $ref:  "#/definitions/Error"
+        "default":
+          description: Internal server error
+          schema:
+            $ref:  "#/definitions/Error"
 
     post:
       summary: "Add a new task"
@@ -57,6 +65,15 @@ paths:
           schema:
             description: "Created task"
             $ref: "#/definitions/Task"
+        "400":
+          description: Bad request
+          schema:
+            $ref:  "#/definitions/Error"
+
+        "default":
+          description: Internal server error
+          schema:
+            $ref:  "#/definitions/Error"
 
   /todos/{id}:
     get:
@@ -77,6 +94,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Task"
+        "400":
+          description: Bad request
+          schema:
+            $ref:  "#/definitions/Error"
+        "404":
+          description: Not found
+          schema:
+            $ref:  "#/definitions/Error"
+
+        "default":
+          description: Internal server error
+          schema:
+            $ref:  "#/definitions/Error"
+
 
     patch:
       summary: "Update an existing task"
@@ -109,6 +140,20 @@ paths:
           schema:
             description: "Updated task"
             $ref: "#/definitions/Task"
+        "400":
+          description: Bad request
+          schema:
+            $ref:  "#/definitions/Error"
+        "404":
+          description: Not found
+          schema:
+            $ref:  "#/definitions/Error"
+
+        "default":
+          description: Internal server error
+          schema:
+            $ref:  "#/definitions/Error"
+
 
     delete:
       summary: "Delete task by ID"
@@ -126,6 +171,20 @@ paths:
       responses:
         "204":
           description: "successful operation"
+        "400":
+          description: Bad request
+          schema:
+            $ref:  "#/definitions/Error"
+        "404":
+          description: Not found
+          schema:
+            $ref:  "#/definitions/Error"
+
+        "default":
+          description: Internal server error
+          schema:
+            $ref:  "#/definitions/Error"
+
 
 definitions:
   Task:
@@ -144,3 +203,14 @@ definitions:
       created:
         type: string
         format: date-time
+
+  Error:
+    description: Error message
+    required:
+      - status
+      - message
+    properties:
+      status:
+        type: boolean
+      message:
+        type: string
