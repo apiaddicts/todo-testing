@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "definition-swagger-test": "mocha --timeout 0 --exit test/todo.swagger.test.js"
+    "definition-swagger-test": "mocha --timeout 0 --exit test/todo.swagger.test.js",
+    "unit-test": "mocha --timeout 0 --exit test/todo-unit-test.js"
   },
   "author": "Omar del Valle Rodriguez",
   "license": "ISC",
@@ -13,6 +14,9 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "js-yaml": "^4.1.0",
+    "jsonschema": "^1.4.0",
+    "mongoose": "^5.12.11",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
@@ -20,6 +24,7 @@
     "driven-swagger-test": "^1.2.1",
     "mocha": "^8.4.0",
     "sinon": "^10.0.0",
+    "sinon-chai": "^3.7.0",
     "sinon-express-mock": "^2.2.1"
   }
 }

@@ -189,6 +189,10 @@ paths:
 definitions:
   Task:
     description: Task
+    required:
+      - todo
+      - completed
+      - created
     properties:
       id:
         type: string
