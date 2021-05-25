@@ -26,6 +26,8 @@ describe('TODO unit test', () => {
       const res = mockRes();
 
       controller.PostTodo(req, res);
+
+      TodoMock.verify();
       expect(res.status).to.be.calledWith(201);
       expect(res.json).to.be.calledWith(expectedResult);
 
@@ -40,6 +42,8 @@ describe('TODO unit test', () => {
       const res = mockRes();
 
       controller.PostTodo(req, res);
+
+      TodoMock.verify();
       expect(res.status).to.be.calledWith(500);
       expect(res.json).to.be.calledWith({ status: false, message: 'Error creating document in mongo.' });
 
@@ -47,8 +51,6 @@ describe('TODO unit test', () => {
     });
 
     it('should return bad request if todo is invalid', (done) => {
-      TodoMock = sinon.mock(Todo);
-
       const req = mockReq( { body: { task: 'example for test'} });
       const res = mockRes();
 
@@ -74,6 +76,8 @@ describe('TODO unit test', () => {
       const res = mockRes();
 
       controller.GetTodos(req, res);
+
+      TodoMock.verify();
       expect(res.json).to.be.calledWith(expectedResult);
 
       done();
@@ -86,6 +90,7 @@ describe('TODO unit test', () => {
       const res = mockRes();
 
       controller.GetTodos(req, res);
+
       expect(res.status).to.be.calledWith(400);
       expect(res.json).to.be.calledWith({ status: false, message: 'bad request.' });
 
@@ -100,6 +105,8 @@ describe('TODO unit test', () => {
       const res = mockRes();
 
       controller.GetTodos(req, res);
+
+      TodoMock.verify();
       expect(res.status).to.be.calledWith(500);
       expect(res.json).to.be.calledWith({ status: false, message: 'Internal server error' });
 
