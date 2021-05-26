@@ -2,11 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+const mongoose = require('mongoose');
+
 const app = express();
 const todos = require('./app/routes/todo.routes');
 const config = require('./app/config/config');
 
 app.use(morgan('dev'));
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true}));
