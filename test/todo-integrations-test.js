@@ -31,6 +31,108 @@ describe('TODO CRUD operatons', () => {
 
           done();
         })
-    })
+    });
+
+    it('missing required property should return a 400 with status as false', (done) => {
+      const newTodo = {task: 'New Todo'};
+      api.post('/api/todos')
+         .set('Accept', 'application/json')
+         .set('Content-Type', 'application/json')
+         .send(newTodo)
+         .expect('Content-Type', /json/)
+         .expect(400)
+         .end((err, res) => {
+            if (err) return done(err);
+
+            expect(validator.validate({
+              path: '/todos',
+              method: 'post',
+              status: '400',
+              value: res.body
+            })).to.be.null;
+
+            expect(res.body.status).to.be.false;
+            done();
+          });
+    });
+  })
+
+  describe('GET one todo', () => {
+    let response = {};
+    before((done) => {
+      const newTodo = {todo: 'Todo from hooks'};
+      api.post('/api/todos')
+         .set('Accept', 'application/json')
+         .set('Content-Type', 'application/json')
+         .send(newTodo)
+         .expect(201)
+         .end((err, res) => {
+           if (err) return done(err);
+
+           response = res.body;
+           done();
+          });
+    });
+
+    it('/Get by id', (done) => {
+			api.get(`/api/todos/${response.id}`)
+         .set('Accept', 'application/json')
+         .expect('Content-Type', /json/)
+			   .expect(200)
+         .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos/{id}',
+            method: 'get',
+            status: '200',
+            value: res.body
+          })).to.be.null;
+
+          expect(res.body.id).to.eql(response.id);
+          done();
+        });
+    });
+
+    it('should return a 400 response with status as false', (done) => {
+      api.get('/api/todos/aaaaa')
+         .set('Accept', 'application/json')
+         .expect('Content-Type', /json/)
+			   .expect(400)
+         .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos/{id}',
+            method: 'get',
+            status: '400',
+            value: res.body
+          })).to.be.null;
+
+          expect(res.body.status).to.be.false;
+          done();
+         });
+    });
+
+    it('should return a 404 response with status as false', (done) => {
+      api.get('/api/todos/123456789009876543211234')
+         .set('Accept', 'application/json')
+         .expect('Content-Type', /json/)
+			   .expect(404)
+         .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos/{id}',
+            method: 'get',
+            status: '404',
+            value: res.body
+          })).to.be.null;
+
+          expect(res.body.status).to.be.false;
+          done();
+         });
+    });
+
   })
 })

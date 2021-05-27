@@ -39,7 +39,12 @@ const TodoCtrl = {
     Todo.find(filter, (err, todos) => {
       if (err) return res.status(500).json({ status: false, message: 'Internal server error'});
 
-      return res.json(todos);
+      return res.json(todos.map(todo => ({
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      })));
     })
   },
   GetOneTodo: (req, res) => {
@@ -55,7 +60,12 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, message: 'internal server error'});
       if (todo === null) return res.status(404).json({status: false, message: 'not found'});
 
-      return res.json({status: true, todo});
+      return res.json({
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      });
     });
   },
   UpdateTodo: (req, res) => {
@@ -79,7 +89,12 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, error: err.message});
       if (todo === null) return res.status(404).json({status: false, error: 'Not found'});
 
-      return res.json({status: true, todo});
+      return res.json({status: true, todo: {
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      }});
     });
   },
   DeleteTodo: (req, res) => {

@@ -149,7 +149,7 @@ describe('TODO unit test', () => {
       controller.GetOneTodo(req, res);
 
       TodoMock.verify();
-      expect(res.json).to.be.calledWith({status: true, todo: expectedMongoResult});
+      expect(res.json).to.be.calledWith(expectedMongoResult);
 
       done();
     });

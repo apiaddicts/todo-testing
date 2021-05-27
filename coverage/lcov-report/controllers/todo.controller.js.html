@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">98.08% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/51</span>
+                <span class='fraction'>51/52</span>
             </div>
         
             
@@ -37,9 +37,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.91% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>10/11</span>
             </div>
         
             
@@ -159,7 +159,22 @@
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -204,6 +219,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -217,6 +237,11 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -241,6 +266,11 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -302,7 +332,12 @@ const TodoCtrl = {
     Todo.find(filter, (err, todos) =&gt; {
       if (err) return res.status(500).json({ status: false, message: 'Internal server error'});
 &nbsp;
-      return res.json(todos);
+      return res.json(todos.map(<span class="fstat-no" title="function not covered" >to</span>do =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      })));
     })
   },
   GetOneTodo: (req, res) =&gt; {
@@ -318,7 +353,12 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, message: 'internal server error'});
       if (todo === null) return res.status(404).json({status: false, message: 'not found'});
 &nbsp;
-      return res.json({status: true, todo});
+      return res.json({
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      });
     });
   },
   UpdateTodo: (req, res) =&gt; {
@@ -342,7 +382,12 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, error: err.message});
       if (todo === null) return res.status(404).json({status: false, error: 'Not found'});
 &nbsp;
-      return res.json({status: true, todo});
+      return res.json({status: true, todo: {
+        id: todo.id,
+        todo: todo.todo,
+        created: todo.created,
+        completed: todo.completed
+      }});
     });
   },
   DeleteTodo: (req, res) =&gt; {
@@ -370,7 +415,7 @@ module.exports = TodoCtrl;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed May 26 2021 17:40:16 GMT+0200 (Central European Summer Time)
+                at Thu May 27 2021 15:55:09 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

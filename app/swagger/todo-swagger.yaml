@@ -6,7 +6,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost:3000"
+host: "localhost:3001"
 basePath: "/api"
 schemes:
 - "http"
@@ -31,10 +31,20 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Task"
+          x-pm-test:
+            - plugins:
+              - name: testSchema
+
         "400":
           description: Bad request
           schema:
             $ref:  "#/definitions/Error"
+          x-pm-test:
+            - params:
+              - name: status
+                in: query
+                value: aaaa
+
         "default":
           description: Internal server error
           schema:
