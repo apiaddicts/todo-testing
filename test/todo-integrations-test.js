@@ -133,6 +133,47 @@ describe('TODO CRUD operatons', () => {
           done();
          });
     });
+  })
 
+  // Jacob: aquí empiezan mis tests
+  describe('GET todos list', () => {
+    it('/Get list of todos', (done) => {
+      api.get(`/api/todos`)
+         .set('Accept', 'application/json')
+         .expect('Content-Type', /json/)
+         .expect(200)
+         .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos',
+            method: 'get',
+            status: '200',
+            value: res.body
+          })).to.be.null;
+          
+          done();
+        });
+    });
+
+    it('should return a 400 response with status as false', (done) => {
+      api.get('/api/todos?status=mal')
+         .set('Accept', 'application/json')
+         .expect('Content-Type', /json/)
+         .expect(400)
+         .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos',
+            method: 'get',
+            status: '400',
+            value: res.body
+          })).to.be.null;
+
+          expect(res.body.status).to.be.false;
+          done();
+         });
+    });
   })
 })
