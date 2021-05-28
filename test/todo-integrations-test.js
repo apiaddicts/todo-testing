@@ -135,4 +135,43 @@ describe('TODO CRUD operatons', () => {
     });
 
   })
+
+  // Marcos: test de integración para eliminar un TODO con éxito
+  describe('/DELETE a todo', () => {
+    let response = {};
+
+    before((done) => {
+      const newTodo = { todo: 'Todo from delete integration test' };
+      api.post('/api/todos')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send(newTodo)
+        .expect(201)
+        .end((err, res) => {
+          if (err) return done(err);
+
+          response = res.body;
+          done();
+        });
+    });
+
+    it('should return 204 if a todo is deleted successfully', (done) => {
+      api.delete(`/api/todos/${response.id}`)
+        .set('Accept', 'application/json')
+        .expect(204)
+        .end((err, res) => {
+          if (err) return done(err);
+
+          expect(validator.validate({
+            path: '/todos/{id}',
+            method: 'delete',
+            status: '204',
+            value: res.body
+          })).to.be.null;
+
+          expect(res.status).to.be.equal(204);
+          done();
+        });
+    });
+  });
 })

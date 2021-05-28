@@ -106,11 +106,11 @@ const TodoCtrl = {
     });
     if (idError) return res.status(400).json({status: false, error: idError.message});
 
-    Todo.remove({_id: req.params.id}, (err, todo) => {
+    Todo.findOneAndDelete({_id: req.params.id}, (err, todo) => {
       if (err) return res.status(500).json({status: false, error: err.message});
-      if (todo.result.n === 0) return res.status(404).json({status: false, error: 'Not found.'});
+      if (!todo) return res.status(404).json({status: false, error: 'Not found.'});
 
-      return res.status(204).end();
+      return res.status(204).json({ id: req.params.id });
     });
   }
 }
