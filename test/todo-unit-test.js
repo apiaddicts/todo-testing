@@ -215,7 +215,7 @@ describe('TODO unit test', () => {
       controller.UpdateTodo(req, res);
 
       TodoMock.verify();
-      expect(res.json).to.be.calledWith({status: true, todo: expectedMongoPatchResult});
+      expect(res.json).to.be.calledWith(expectedMongoPatchResult);
 
       done();
     });

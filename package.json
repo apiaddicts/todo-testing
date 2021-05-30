@@ -9,7 +9,7 @@
     "integration-swagger-test": "mocha --timeout 0 --exit test/todo-integration-swagger.js",
     "unit-test": "node_modules/.bin/nyc --reporter=lcov mocha --timeout 0 --exit test/todo-unit-test.js",
     "integration-test": "mocha --timeout 0 --exit test/todo-integrations-test.js",
-    "bdd-test": "node_modules/.bin/cucumber-js --exit ./bdd/features/ -r ./bdd/steps/"
+    "bdd-test": "node_modules/.bin/cucumber-js --exit ./bdd/features/ -r ./bdd/steps/ -f json:bdd/report/cucumber-report.json"
   },
   "author": "Omar del Valle Rodriguez",
   "license": "ISC",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.2.1",
+    "cucumber-html-reporter": "^5.4.0",
     "axios": "^0.21.1",
     "chai": "^4.3.4",
     "driven-swagger-test": "^1.2.1",

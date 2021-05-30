@@ -15,3 +15,24 @@ Then('I get response code and schema {int}', function (code) {
   assert.equal(this.context['response'].status, code);
 });
 
+Given('The Todo with {} exist', function (id) {
+  this.context['id'] = id;
+});
+
+When('I send GET request to {}', async function(path) {
+  const response = await rest.getData(`http://localhost:3001/api${path}/${this.context['id']}`);
+  this.context['response'] = response;
+});
+
+Then(/^I receive (.*)$/, function (expectedResponse) {
+  assert.deepEqual(this.context['response'].data, JSON.parse(expectedResponse));
+});
+
+
+When('I send PATCH request whit a {} to {}', async function(completed, path) {
+  const response = await rest.patchData(`http://localhost:3001/api${path}/${this.context['id']}`, JSON.parse(completed))
+  this.context['response'] = response;
+})
+
+
+

@@ -89,12 +89,12 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, error: err.message});
       if (todo === null) return res.status(404).json({status: false, error: 'Not found'});
 
-      return res.json({status: true, todo: {
+      return res.json({
         id: todo.id,
         todo: todo.todo,
         created: todo.created,
         completed: todo.completed
-      }});
+      });
     });
   },
   DeleteTodo: (req, res) => {
@@ -110,7 +110,7 @@ const TodoCtrl = {
       if (err) return res.status(500).json({status: false, error: err.message});
       if (todo.result.n === 0) return res.status(404).json({status: false, error: 'Not found.'});
 
-      return res.status(204).end();
+      return res.status(204).json({ id: req.params.id });;
     });
   }
 }
